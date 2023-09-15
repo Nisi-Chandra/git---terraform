@@ -60,4 +60,36 @@ resource "aws_subnet" "private" {
   }
 }
 
+# Elastic IP creation
+
+
+resource "aws_eip" "nat" {
+  domain = "vpc"
+  tags = {
+    Name    = "${var.project_name}-${var.project_environment}-Natgw"
+    project = var.project_name
+    Env     = var.project_environment
+  }
+}
+
+
+# NAT Gateway creation
+
+
+
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[1].id
+
+  tags = {
+    Name    = "${var.project_name}-${var.project_environment}"
+    project = var.project_name
+    Env     = var.project_environment
+  }
+
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.igw]
+}
 
