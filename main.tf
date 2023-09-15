@@ -93,3 +93,44 @@ resource "aws_nat_gateway" "nat" {
   depends_on = [aws_internet_gateway.igw]
 }
 
+
+# Route table creation - Public
+
+
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name    = "${var.project_name}-${var.project_environment}-public"
+    project = var.project_name
+    Env     = var.project_environment
+  }
+}
+
+# Route table creation - Private
+
+
+
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+
+  tags = {
+    Name    = "${var.project_name}-${var.project_environment}-private"
+    project = var.project_name
+    Env     = var.project_environment
+  }
+}
+
+
