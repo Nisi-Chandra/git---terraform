@@ -24,11 +24,11 @@ variable "region" {
 }
 
 variable "access_key" {
-  default = "AKIA3ZWQXAGE5BI3HWT5"
+  default = "MKAKIA3ZWQXAGE5BI3HWT5"
 }
 
 variable "secret_key" {
-  default = "nGchE78Xuej/1+zRmvyb0oA1VlZXk78lnGmWJQKk"
+  default = "nGchE78Xuej/1+zRmvyb0oA1VlZXk78lnGmWJQKkmk"
 }
 
 variable "private_zone_name" {
